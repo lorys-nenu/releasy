@@ -25,6 +25,7 @@ model User {
 model Organization {
   id    Int     @id @default(autoincrement())
   name  String
+  identifier String @unique @default(cuid())
   users User[]
   ReleaseNotes ReleaseNote[]
 }

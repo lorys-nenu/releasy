@@ -5,7 +5,8 @@ import dynamic from "next/dynamic";
 const Editor = dynamic(() => import("@/components/Editor"), { ssr: false });
 
 export default async function EditorPage({params}: {params: {noteId: string}}) {
-  const noteId = params.noteId;
+  const noteId = params.noteId.split("-").pop();
+
   const note: ReleaseNote | null = await prisma.releaseNote.findUnique({
     where: { id: Number(noteId) },
   });
