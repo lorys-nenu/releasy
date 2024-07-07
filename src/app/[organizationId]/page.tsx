@@ -1,3 +1,4 @@
+import ReleaseNoteListCard from "@/components/ReleaseNoteListCard";
 import prisma from "@/lib/prisma";
 import Link from "next/link";
 
@@ -17,15 +18,15 @@ export default async function OrganizationPage({params}: {params: {organizationI
   }
 
   return (
-    <div>
-      <h1>{organization.name}</h1>
-      {organization.ReleaseNotes.map((releaseNote) => (
-        <Link key={releaseNote.id} href={`/${organizationId}/${releaseNote.title.replace(" ", "-")}-${releaseNote.id}`}>
-        <div key={releaseNote.id}>
-          {releaseNote.title}
-          </div>
-        </Link>
-      ))}
+    <div className="mx-3 md:mx-48 mt-8">
+      <h1 className="text-2xl text-center text-pretty">Release Notes from {organization.name}</h1>
+      <div className="flex-col mt-4 gap-2">
+        {organization.ReleaseNotes.map((releaseNote) => (
+          <Link key={releaseNote.id} href={`/${organizationId}/${releaseNote.title.replace(" ", "-")}-${releaseNote.id}`}>
+            <ReleaseNoteListCard note={releaseNote} />
+          </Link>
+        ))}
+    </div>
     </div>
   );
 }

@@ -13,3 +13,14 @@ export async function saveContent (content: ReleaseNote["content"]) {
     data: { content },
   });
 }
+
+export async function saveTitle (title: ReleaseNote["title"]) {
+  if (!title) {
+    return;
+  }
+
+  await prisma.releaseNote.update({
+    where: { id: 1 },
+    data: { title },
+  });
+}
