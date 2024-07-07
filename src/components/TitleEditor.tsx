@@ -8,11 +8,11 @@ import { useDebounceCallback } from "usehooks-ts";
 export default function TitleEditor({note}: {note: ReleaseNote}) {
   const [title, setTitle] = useState(note.title);
 
-  const debouncedSaveTitle = useDebounceCallback(saveTitle, 1000);
+  const debouncedSaveTitle = useDebounceCallback(saveTitle, 500);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
-    debouncedSaveTitle(e.target.value);
+    debouncedSaveTitle(note.id, e.target.value);
   };
 
   return (

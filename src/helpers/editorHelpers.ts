@@ -2,25 +2,30 @@
 
 import prisma from "@/lib/prisma";
 import { ReleaseNote } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 
-export async function saveContent (content: ReleaseNote["content"]) {
+export async function saveContent (id: number, content: ReleaseNote["content"]) {
   if (!content) {
     return;
   }
 
   await prisma.releaseNote.update({
-    where: { id: 1 },
+    where: { id },
     data: { content },
   });
 }
 
-export async function saveTitle (title: ReleaseNote["title"]) {
+export async function saveTitle (id: number, title: ReleaseNote["title"]) {
   if (!title) {
     return;
   }
 
-  await prisma.releaseNote.update({
-    where: { id: 1 },
+  const updatedNote = await prisma.releaseNote.update({
+    where: { id },
     data: { title },
+    include: {
+      Organization: true,
+    }
   });
+  revalidatePath(`/${updatedNote.Organization.identifier}/`);
 }

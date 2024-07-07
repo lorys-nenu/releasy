@@ -19,13 +19,13 @@ export default function Editor({note}: Props) {
     initialContent: note.content as PartialBlock[],
   });
 
-  const debouncedSaveContent = useDebounceCallback(saveContent, 1000);
+  const debouncedSaveContent = useDebounceCallback(saveContent, 500);
  
   // Renders the editor instance using a React component.
   return (
     <BlockNoteView 
       editor={editor} 
-      onChange={() => debouncedSaveContent(editor.document)}
+      onChange={() => debouncedSaveContent(note.id, editor.document)}
     />
   )
   ;
